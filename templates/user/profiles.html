@@ -1,0 +1,225 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    .custom-body {
+        font-family: Arial, sans-serif;
+        background-color: #ff1997;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+    .profile-container {
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px; /* Adding top margin */
+        height: 90%; /* Take full height of parent */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Distribute space evenly */
+    }
+
+    .profile-pic img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .profile-pic img.zoomed {
+        transform: scale(2);
+    }
+
+    .bio h2 {
+        margin: 10px 0;
+        font-size: 24px;
+    }
+
+    .bio p {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .buttons {
+        margin-top: 10px;
+    }
+
+    .buttons .btn {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    
+
+    
+
+    .btn-black {
+        background-color: #000;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-black:hover {
+        background-color: #333;
+    }
+
+    .profile-details {
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    .profile-details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px; /* Add margin-top to separate from bio */
+    }
+
+    .profile-details th, .profile-details td {
+        padding: 12px 15px; /* Adjust padding for better readability */
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .profile-details th {
+        background-color: #f2f2f2; /* Light gray background for headers */
+    }
+
+    .profile-details td {
+        background-color: #fff; /* White background for data cells */
+    }
+
+    .additional-content {
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        margin-bottom: 20px;
+        margin-top: 20px; /* Adding top margin */
+        height: 90%; /* Take full height of parent */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Distribute space evenly */
+    }
+
+    .additional-content h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .additional-content .reels img, .additional-content .pics img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="custom-body">
+    <div class="container-fluid"> <!-- Use container-fluid for full-width -->
+        <div class="row align-items-start align-items-stretch"> <!-- Align items to start and stretch height -->
+            <div class="col-md-4">
+                <div class="profile-container">
+                    <div class="profile-pic">
+                        <img id="profile-pic" src="{{ profile.profile_pic.url }}" alt="Profile Picture">
+                    </div>
+                    <div class="bio">
+                        <h2>{{ profile.full_name }}</h2>
+                        <p>{{ profile.bio }}</p>
+                        <div class="buttons">
+                            <button class="btn btn-black">Shortlist</button>
+                            <button class="btn btn-black">Send</button>
+                            <a class="btn btn-black" href="{% url 'accounts:send_message' profile.id %}">Message</a>
+
+                            <input label="text" value="{{ recepient.id }}"></input>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>District</th>
+                                <td>{{ profile.address.district }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>{{ profile.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Qualification</th>
+                                <td>{{ profile.qualification }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td>{{ profile.dob }}</td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td>{{ profile.get_gender_display }}</td>
+                            </tr>
+                            <tr>
+                                <th>Smoking Habit</th>
+                                <td>{{ profile.get_smoke_display }}</td>
+                            </tr>
+                            <tr>
+                                <th>Drinking Habit</th>
+                                <td>{{ profile.get_drinking_display }}</td>
+                            </tr>
+                            <tr>
+                                <th>Relationship Status</th>
+                                <td>{{ profile.get_rel_status_display }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="additional-content">
+                    <div class="section">
+                        <h3>Additional Pictures</h3>
+                        <div class="pics">
+                            <!-- Loop through additional pictures here -->
+                            <img src="" alt="Additional Picture">
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h3>Reels</h3>
+                        <div class="reels">
+                            {% if profile.short_reel %}
+                                <video width="320" height="240" controls>
+                                    <source src="{{ profile.short_reel.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            {% else %}
+                                <p>No reel available.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('profile-pic').addEventListener('click', function() {
+        this.classList.toggle('zoomed');
+    });
+</script>
+{% endblock content %}

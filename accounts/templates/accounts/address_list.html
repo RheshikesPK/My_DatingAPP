@@ -1,0 +1,27 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+
+{% block accounts_content %}
+    <div class="container-fluid">
+        <div class="d-flex">
+            <a href="{% url 'accounts:address_create' %}" class="ms-auto">&plus; New Address</a>
+        </div>
+
+        <h1 class="text-center">Address List</h1>
+
+        {% for address in object_list %}
+            <div class="card mb-2">
+                <div class="card-header">
+                    <b>{{ address.name }}</b>
+                </div>
+                <div class="card-body">{{ address }}</div>
+                <div class="card-footer d-flex">
+                    <div class="btn-group ms-auto">
+                        <a href="{% url 'accounts:address_update' address.id %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'accounts:address_delete' address.id %}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock accounts_content %}
+    

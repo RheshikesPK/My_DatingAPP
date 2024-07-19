@@ -1,0 +1,70 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    .login-form-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #ff1997;
+    }
+    .login-form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 800px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .login-container, .photo-container {
+        flex: 1;
+        padding: 20px;
+    }
+    .photo-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    .side-photo {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+    @media (min-width: 768px) {
+        .login-form-container {
+            flex-direction: row;
+        }
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="login-form-wrapper">
+    <div class="login-form-container">
+        <div class="photo-container">
+            <img src="{% static 'images/dating.jpg' %}" alt="Photo" class="side-photo">
+        </div>
+        <div class="login-container">
+            <h2 class="text-center">Dating App Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="btn btn-danger btn-block">Login</button>
+            </form>
+            <p class="text-center mt-3">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

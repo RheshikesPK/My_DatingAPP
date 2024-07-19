@@ -1,0 +1,63 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block styles %}
+    <style>
+        body {
+            background-color: #ff1997;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+    {% endblock styles %}
+
+    {% block content %}
+<div class="form-container mt-5">
+    <h2 class="text-center">Employment Details</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="employment-status">Are you an employee or job seeker?</label>
+            <select class="form-control" id="employment-status" name="employment-status" required>
+                <option value="">Select</option>
+                <option value="Employee">Employee</option>
+                <option value="Job Seeker">Job Seeker</option>
+            </select>
+        </div>
+        <div id="employee-details" style="display: none;">
+            {{ employee_form.as_p }}
+        </div>
+        <div id="job-seeker-details" style="display: none;">
+            {{ job_seeker_form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-danger btn-block">Submit</button>
+    </form>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#employment-status').change(function() {
+            if ($(this).val() == 'Employee') {
+                $('#employee-details').show();
+                $('#job-seeker-details').hide();
+            } else if ($(this).val() == 'Job Seeker') {
+                $('#employee-details').hide();
+                $('#job-seeker-details').show();
+            } else {
+                $('#employee-details').hide();
+                $('#job-seeker-details').hide();
+            }
+        });
+    });
+</script>
+{% endblock scripts %}

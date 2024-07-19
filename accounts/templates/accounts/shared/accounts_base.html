@@ -1,0 +1,29 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="row mt-5 g-0">
+        <div class="col-sm-4 bg-light border rounded">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{% url 'accounts:profile' %}" class="nav-link">Profile</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'accounts:address_list' %}" class="nav-link">Address</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'accounts:profile' %}" class="nav-link">Change Password</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'accounts:logout' %}" class="nav-link text-danger">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-8">
+            {% block accounts_content %}
+                
+            {% endblock accounts_content %}      
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,133 @@
+{% extends 'shared/base.html' %}
+
+{% block styles %}
+<style>
+    body {
+        
+        background-color: #ff1997;
+    }   
+    .category-box {
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    .category-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .card-custom {
+        border-radius: 10px;
+        transition: transform 0.2s;
+        height: 100%; /* Ensure all cards have the same height */
+    }
+    .card-custom:hover {
+        transform: scale(1.05);
+    }
+    .card-custom img {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 200px; /* Fixed height for the images */
+        object-fit: cover; /* Ensure images cover the designated area */
+    }
+    .card-body-custom {
+        background-color: #ffffff; /* White background color */
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding: 20px;
+        height: 100%; /* Ensure all card bodies have the same height */
+    }
+    .btn-go {
+        background-color: #dc3545; /* Green background color */
+        border-color: #dc3545;
+        width: 100%; /* Matching border color */
+    }
+    .bg-green {
+        background-color: #ffff; /* Light green */
+    }
+    .bg-blue {
+        background-color:  #ffff; /* Light blue */
+    }
+    .bg-yellow {
+        background-color:  #ffff; /* Light yellow */
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <!-- First Category Box -->
+    <div class="category-box bg-green">
+        <div class="category-title">Category 1</div>
+        <div class="row">
+            {% for user in users %}
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom">
+                    {% if user.profile_pic %}
+                    <img src="{{ user.profile_pic.url }}" class="card-img-top" alt="Profile Picture">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Card image">
+                    {% endif %}
+                    <div class="card-body card-body-custom">
+                        <h5 class="card-title">{{ user.get_full_name }}</h5>
+                        <p class="card-text">{{ user.address.district }}</p>
+                        <a href="{% url 'accounts:profile-view' user.id %}" class="btn btn-primary btn-go">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Second Category Box -->
+    <div class="category-box bg-blue">
+        <div class="category-title">Category 2</div>
+        <div class="row">
+            {% for user in users %}
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom">
+                    {% if user.profile_pic %}
+                    <img src="{{ user.profile_pic.url }}" class="card-img-top" alt="Profile Picture">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Card image">
+                    {% endif %}
+                    <div class="card-body card-body-custom">
+                        <h5 class="card-title">{{ user.get_full_name }}</h5>
+                        <p class="card-text">Quick text.</p>
+                        <a href="{% url 'accounts:profile-view' user.id %}" class="btn btn-primary btn-go">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Third Category Box -->
+    <div class="category-box bg-yellow">
+        <div class="category-title">Category 3</div>
+        <div class="row">
+            {% for user in users %}
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom">
+                    {% if user.profile_pic %}
+                    <img src="{{ user.profile_pic.url }}" class="card-img-top" alt="Profile Picture">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Card image">
+                    {% endif %}
+                    <div class="card-body card-body-custom">
+                        <h5 class="card-title">{{ user.get_full_name }}</h5>
+                        <p class="card-text">Quick text.</p>
+                        <a href="{% url 'accounts:profile-view' user.id %}" class="btn btn-primary btn-go">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock content %}

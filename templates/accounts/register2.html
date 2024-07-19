@@ -1,0 +1,79 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block styles %}
+    <style>
+        body {
+            background-color: #ff1997;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+{% endblock styles %}
+
+{% block content %}
+<div class="form-container mt-5">
+    <h2 class="text-center">Profile Information</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    {{ form.dob }}
+                </div>
+                <div class="form-group">
+                    <label for="phone">Mobile Number</label>
+                    {{ form.phone }}
+                </div>
+                <div class="form-group">
+                    <label for="smoke">Smoking Habits</label>
+                    {{ form.smoke }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="smoke">Bio</label>
+                    {{ form.bio }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="smoke">Relationship Status</label>
+                    {{ form.rel_status }}
+                </div>
+                <div class="form-group">
+                    <label for="drinking">Drinking Habits</label>
+                    {{ form.drinking }}
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    {{ form.gender }}
+                </div>
+                <div class="form-group">
+                    <label for="gender">Qualification</label>
+                    {{ form.qualification }}
+                </div>
+                <div class="form-group">
+                    <label for="profile_pic">Profile Picture</label>
+                    {{ form.profile_pic }}
+                </div>
+                <div class="form-group">
+                    <label for="short_reel">Short Reel</label>
+                    {{ form.short_reel }}
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-danger btn-block">Submit</button>
+    </form>
+</div>
+
+
+{% endblock content %}
